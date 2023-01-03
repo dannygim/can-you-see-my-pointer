@@ -25,8 +25,8 @@ export class MyCanvas {
     this.#resizeIfNeeded(this.#canvas);
 
     // Setup mouse event
-    document.addEventListener('mousemove', this.#handleMouseMove);
-    document.addEventListener('mousedown', this.#handleMouseDown);
+    document.addEventListener('mousemove', this.#handleMouseMove, { capture: true });
+    document.addEventListener('mousedown', this.#handleMouseDown, { capture: true });
 
     // start to render
     this.#render();
@@ -36,8 +36,8 @@ export class MyCanvas {
 
   destroy() {
     // Remove mouse event
-    document.removeEventListener('mousedown', this.#handleMouseMove);
-    document.removeEventListener('mousemove', this.#handleMouseMove);
+    document.removeEventListener('mousedown', this.#handleMouseMove, { capture: true });
+    document.removeEventListener('mousemove', this.#handleMouseMove, { capture: true });
 
     this.#ctx = undefined;
     this.#canvas = undefined;

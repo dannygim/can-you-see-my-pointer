@@ -2,27 +2,29 @@ import { NamedColor } from "./types";
 
 export default class MenuColor {
   #selectedColor: NamedColor = NamedColor.Pink;
+  #menuItem?: HTMLLIElement;
   #image?: HTMLImageElement;
 
   build(): HTMLLIElement {
-    const menuItem = document.createElement('li');
+    this.#menuItem = document.createElement('li');
 
-    // Create an anchor
-    const anchor = document.createElement('a');
-    anchor.href = '#';
-    anchor.addEventListener('click', this.#handleClick);
-    menuItem.appendChild(anchor);
+    // event listener
+    this.#menuItem.addEventListener('click', this.#handleClick);
 
     // Create an image
     this.#image = document.createElement('img');
     this.#image.src = `/assets/icon_${this.#selectedColor}_32.png`;
-    anchor.appendChild(this.#image);
+    this.#menuItem.appendChild(this.#image);
 
-    return menuItem;
+    return this.#menuItem;
   }
 
   destroy() {
+    // remove event listener
+    this.#menuItem?.removeEventListener('click', this.#handleClick);
+
     this.#image = undefined;
+    this.#menuItem = undefined;
   }
 
   setColor(color: NamedColor) {
@@ -34,6 +36,6 @@ export default class MenuColor {
 
   #handleClick = (e: MouseEvent) => {
     e.preventDefault();
-    console.debug('MenuColor handleClick called', event);
+    console.debug('MenuColor handleClick called', e);
   }
 }

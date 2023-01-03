@@ -25,11 +25,13 @@ canvas {
 li {
   display: block;
   padding: 4px;
-  border-top: 1px solid black;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border: 2px solid lightgray;
 }
 
-li:nth-last-of-type(1) {
-  border-bottom: 1px solid black;
+li:not(first-of-type) {
+  cursor: pointer;
+}
+
+li:first-of-type {
+  border-bottom: none;
 }
