@@ -7,6 +7,10 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: '',
+    define: {
+      "__KEY_IS_ENABLED__": "'is_enabled'",
+      "__TYPE_CUSTOM_EVENT__": "'x-on-custom-event'",
+    },
     build: {
       target: 'esnext',
       minify: isProduction,
@@ -14,7 +18,6 @@ export default defineConfig(({ mode }) => {
         input: {
           background: resolve(__dirname, 'src/background/main.ts'),
           content: resolve(__dirname, 'src/content/main.ts'),
-          content_loader: resolve(__dirname, 'src/content_loader.js'),
         },
         output: {
           entryFileNames: '[name].js'
