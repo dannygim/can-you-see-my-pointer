@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Can You See My Pointer?",
+  "version": "0.1.0",
+  "description": "Can You See My Pointer? is a simple extension that allows you to see your mouse pointer when you are presenting a screen share in Slack, Zoom.",
+  "icons": {
+    "16": "assets/icon_16.png",
+    "32": "assets/icon_32.png",
+    "48": "assets/icon_48.png",
+    "128": "assets/icon_128.png"
+  },
+  "action": {
+    "default_title": "Can You See My Pointer?",
+    "default_icon": {
+      "16": "assets/icon_off_16.png",
+      "32": "assets/icon_off_32.png",
+      "48": "assets/icon_off_48.png",
+      "128": "assets/icon_off_128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage"
+  ]
+}
