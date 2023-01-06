@@ -15,7 +15,6 @@ export class MyCanvas {
     this.#color = NamedColor.toRGB(NamedColor.Red);
 
     this.#pointerHistory = Array(HISTORY_LENGTH).fill({ x: -1, y: -1 });
-    console.debug('MyCanvas constructor called', this.#pointerHistory);
   }
 
   build(): HTMLElement {

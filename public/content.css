@@ -1,0 +1,13 @@
+.can-you-see-my-pointer {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+iframe.prevent-pointer-events {
+  pointer-events: none;
+}

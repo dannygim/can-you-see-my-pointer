@@ -1,50 +1,45 @@
-import styles from './styles.css?inline';
-import { MyCanvas } from './canvas';
-import { Menu } from './menu';
-import { NamedColor } from './types';
+import CanYouSeeMyPointer from './root';
 
-// Define the <can-you-see-my-pointer> element
-customElements.define('can-you-see-my-pointer', class extends HTMLElement {
-  #myCanvas: MyCanvas;
-  #menu: Menu;
+let myExtension: CanYouSeeMyPointer | null = null;
 
-  constructor() {
-    super();
-    console.debug('CanYouSeeMyPointer constructor called');
+function turnOn() {
+  document.querySelectorAll('iframe').forEach((iframe) => {
+    iframe.classList.add('prevent-pointer-events');
+  });
 
-    // Create a shadow root
-    const shadow = this.attachShadow({ mode: 'closed' });
-    console.debug('shadow', shadow);
-
-    // custom shadow style
-    const style = document.createElement('style');
-    style.textContent = styles;
-
-    // Create a canvas
-    this.#myCanvas = new MyCanvas();
-    const canvas = this.#myCanvas.build();
-
-    // Create a menu
-    this.#menu = new Menu();
-    const menu = this.#menu.build();
-
-    // set color
-    this.#myCanvas.setColor(NamedColor.Orange);
-    this.#menu.setColor(NamedColor.Orange);
-
-    // append children
-    shadow.appendChild(style);
-    shadow.appendChild(canvas);
-    shadow.appendChild(menu);
-  }
-
-  disconnectedCallback() {
-    console.debug('CanYouSeeMyPointer disconnectedCallback called');
-    this.#myCanvas.destroy();
-  }
-});
-
-export function turnOn() {
-  const myExtension = document.createElement('can-you-see-my-pointer');
-  document.body.appendChild(myExtension);
+  myExtension = new CanYouSeeMyPointer();
+  myExtension.build();
 }
+
+function turnOff() {
+  document.querySelectorAll('iframe').forEach((iframe) => {
+    iframe.classList.remove('prevent-pointer-events');
+  });
+
+  myExtension?.destroy();
+  myExtension = null;
+}
+
+// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+function handleMessage(message: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) {
+  console.debug('content script received message', message, sender);
+  switch (message.type) {
+    case 'turn_on':
+      turnOn();
+      break;
+
+    case 'turn_off':
+      turnOff();
+      break;
+
+    default:
+      console.debug('unknown message type', message);
+      break;
+  }
+  sendResponse('hello from content script');
+  return true;
+}
+
+(() => {
+  chrome.runtime.onMessage.addListener(handleMessage);
+})();
