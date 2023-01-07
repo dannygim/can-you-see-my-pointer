@@ -11,7 +11,7 @@ export default class MenuColor {
 
     // Create an image
     this.#image = document.createElement('img');
-    this.#image.src = chrome.runtime.getURL(`./assets/icon_${this.#selectedColor}_32.png`);
+    this.#image.src = chrome.runtime.getURL(`./assets/icon_${this.#selectedColor.name}_32.png`);
     this.#menuItem.appendChild(this.#image);
 
     return this.#menuItem;
@@ -28,7 +28,7 @@ export default class MenuColor {
   setColor(color: NamedColor) {
     this.#selectedColor = color;
     if (this.#image) {
-      this.#image.src = chrome.runtime.getURL(`./assets/icon_${this.#selectedColor}_32.png`);
+      this.#image.src = chrome.runtime.getURL(`./assets/icon_${this.#selectedColor.name}_32.png`);
     }
   }
 
