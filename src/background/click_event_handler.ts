@@ -1,3 +1,5 @@
+import { changeActiveExtension } from "./messages";
+
 async function handleActionClick(tab: chrome.tabs.Tab) {
   console.debug('action clicked', tab);
   const result = await chrome.storage.session.get([__KEY_IS_ENABLED__]);
@@ -15,16 +17,8 @@ async function handleActionClick(tab: chrome.tabs.Tab) {
   await chrome.storage.session.set({ [__KEY_IS_ENABLED__]: !isEnabled });
 
   // send on/off message to all tabs in current window
-  (await chrome.tabs.query({
-    currentWindow: true,
-    windowType: 'normal',
-  })).forEach((tab, i) => {
-    console.debug('[%d] tab: %o', i, tab);
-    const message: XEvent = (tab.active && tab.highlighted && !isEnabled)
-      ? { type: 'turn_on' }
-      : { type: 'turn_off' };
-    chrome.tabs.sendMessage<XEvent, void>(tab.id!, message);
-  });
+  const shouldEnable = !isEnabled;
+  await changeActiveExtension(shouldEnable);
 }
 
 export function init() {

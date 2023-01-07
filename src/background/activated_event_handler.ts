@@ -1,12 +1,12 @@
-function handlerActivated(activeInfo: chrome.tabs.TabActiveInfo) {
+import { changeActiveExtension } from "./messages";
+
+async function handlerActivated(activeInfo: chrome.tabs.TabActiveInfo) {
   console.debug('activated', activeInfo);
-  chrome.tabs.sendMessage(activeInfo.tabId, { ...activeInfo, type: 'activated' });
+  const result = await chrome.storage.session.get([__KEY_IS_ENABLED__]);
+  const shouldEnable = result[__KEY_IS_ENABLED__] ?? false;
+  await changeActiveExtension(shouldEnable);
 }
 
 export function init() {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    console.debug('tabs.query', tabs);
-  });
-
   chrome.tabs.onActivated.addListener(handlerActivated);
 }
