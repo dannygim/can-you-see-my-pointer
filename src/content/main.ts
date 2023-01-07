@@ -3,6 +3,8 @@ import CanYouSeeMyPointer from './root';
 let myExtension: CanYouSeeMyPointer | null = null;
 
 function turnOn() {
+  if (myExtension) return;
+
   document.querySelectorAll('iframe').forEach((iframe) => {
     iframe.classList.add('prevent-pointer-events');
   });
@@ -12,6 +14,8 @@ function turnOn() {
 }
 
 function turnOff() {
+  if (!myExtension) return;
+
   document.querySelectorAll('iframe').forEach((iframe) => {
     iframe.classList.remove('prevent-pointer-events');
   });
