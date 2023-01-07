@@ -1,5 +1,4 @@
 import MenuColor from "./menu_color";
-import { NamedColor } from "./types";
 
 export class Menu {
   #menuColor?: MenuColor;

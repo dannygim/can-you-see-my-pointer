@@ -1,7 +1,5 @@
-import { NamedColor } from "./types";
-
 export default class MenuColor {
-  #selectedColor: NamedColor = NamedColor.Pink;
+  #selectedColor: NamedColor = { name: 'pink', r: 255, g: 47, b: 108 };
   #menuItem?: HTMLLIElement;
   #image?: HTMLImageElement;
 

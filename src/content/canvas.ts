@@ -1,18 +1,16 @@
-import { ClickPoint, NamedColor, Point, RGBColor } from "./types";
-
 const HISTORY_LENGTH = 5;
 const CLICK_POINT_LIFE = 3;
 
 export class MyCanvas {
   #canvas?: HTMLCanvasElement;
   #ctx?: CanvasRenderingContext2D;
-  #color: RGBColor;
+  #color: NamedColor;
   #currentPoint: Point = { x: -1, y: -1 };
   #clickedPoint: ClickPoint = { x: -1, y: -1, life: 0 };
   #pointerHistory: Point[];
 
   constructor() {
-    this.#color = NamedColor.toRGB(NamedColor.Red);
+    this.#color = { name: 'red', r: 255, g: 38, b: 0 };
 
     this.#pointerHistory = Array(HISTORY_LENGTH).fill({ x: -1, y: -1 });
   }
@@ -43,7 +41,7 @@ export class MyCanvas {
   }
 
   setColor(color: NamedColor) {
-    this.#color = NamedColor.toRGB(color);
+    this.#color = color;
   }
 
   #handleMouseMove = (e: MouseEvent) => {
@@ -88,7 +86,7 @@ export class MyCanvas {
   };
 
   #renderPointer = (ctx: CanvasRenderingContext2D, { color, p, index }: {
-    color: RGBColor;
+    color: NamedColor;
     p: Point;
     index: number;
   }) => {

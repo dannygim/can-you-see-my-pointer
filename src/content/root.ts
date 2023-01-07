@@ -1,7 +1,6 @@
 import styles from './styles.css?inline';
 import { MyCanvas } from "./canvas";
 import { Menu } from "./menu";
-import { NamedColor } from './types';
 
 export default class CanYouSeeMyPointer {
   #root?: HTMLElement;
@@ -29,8 +28,9 @@ export default class CanYouSeeMyPointer {
     const menu = this.#menu.build();
 
     // set color
-    this.#myCanvas.setColor(NamedColor.Orange);
-    this.#menu.setColor(NamedColor.Orange);
+    const orange: NamedColor = { name: 'orange', r: 255, g: 148, b: 28 };
+    this.#myCanvas.setColor(orange);
+    this.#menu.setColor(orange);
 
     // append children
     shadow.appendChild(style);
