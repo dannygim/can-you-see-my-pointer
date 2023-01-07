@@ -5,9 +5,9 @@ export async function changeActiveExtension(shouldEnable: boolean) {
     windowType: 'normal',
   })).forEach((tab, i) => {
     console.debug('[%d] tab: %o', i, tab);
-    const message: XEvent = (shouldEnable && tab.active && tab.highlighted)
+    const message: XTabEvent = (shouldEnable && tab.active && tab.highlighted)
       ? { type: 'turn_on' }
       : { type: 'turn_off' };
-    chrome.tabs.sendMessage<XEvent, void>(tab.id!, message);
+    chrome.tabs.sendMessage<XTabEvent, void>(tab.id!, message);
   });
 }

@@ -20,8 +20,12 @@ type NamedColor =
   | NamedColorBlack
   ;
 
-type XEvent =
+type XTabEvent =
   | { type: 'turn_on'; }
   | { type: 'turn_off'; }
-  | { type: 'change_color'; }
+  ;
+
+type XContentEvent =
+  | { type: 'open_color_chooser'; }
+  | { type: 'set_color'; color: NamedColor; }
   ;

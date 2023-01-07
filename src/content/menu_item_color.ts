@@ -1,4 +1,6 @@
-export default class MenuColor {
+import { openColorChooser } from "./messages";
+
+export default class MenuItemColor {
   #selectedColor: NamedColor = { name: 'pink', r: 255, g: 47, b: 108 };
   #menuItem?: HTMLLIElement;
   #image?: HTMLImageElement;
@@ -32,8 +34,8 @@ export default class MenuColor {
     }
   }
 
-  #handleClick = (e: MouseEvent) => {
+  #handleClick = async (e: MouseEvent) => {
     e.preventDefault();
-    console.debug('MenuColor handleClick called', e);
+    openColorChooser();
   }
 }

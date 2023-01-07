@@ -1,7 +1,7 @@
-import MenuColor from "./menu_color";
+import MenuItemColor from "./menu_item_color";
 
 export class Menu {
-  #menuColor?: MenuColor;
+  #menuColor?: MenuItemColor;
 
   constructor() {
   }
@@ -12,10 +12,10 @@ export class Menu {
     menu.className = 'menu';
 
     // Title
-    menu.innerHTML = "<li><span>Menu</span></li>";
+    menu.innerHTML = "<li><span>Color</span></li>";
 
     // Create a menu item
-    this.#menuColor = new MenuColor();
+    this.#menuColor = new MenuItemColor();
     const menuColor = this.#menuColor.build();
 
 
