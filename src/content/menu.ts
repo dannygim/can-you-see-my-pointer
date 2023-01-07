@@ -1,4 +1,4 @@
-import MenuItemColor from "./menu_item_color";
+import MenuItemColor from "./menu_item_color.ts";
 
 export class Menu {
   #menuColor?: MenuItemColor;
@@ -8,8 +8,8 @@ export class Menu {
 
   build(): HTMLElement {
     // Create a menu
-    const menu = document.createElement('ul');
-    menu.className = 'menu';
+    const menu = document.createElement("ul");
+    menu.className = "menu";
 
     // Title
     menu.innerHTML = "<li><span>Color</span></li>";
@@ -17,7 +17,6 @@ export class Menu {
     // Create a menu item
     this.#menuColor = new MenuItemColor();
     const menuColor = this.#menuColor.build();
-
 
     // append children
     menu.appendChild(menuColor);

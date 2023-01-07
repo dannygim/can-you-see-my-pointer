@@ -1,7 +1,8 @@
-import styles from './styles.css?inline';
-import { MyCanvas } from "./canvas";
-import { Menu } from "./menu";
-import ColorChooser from './color_chooser';
+// @ts-expect-error: Temporary workaround for deno-ts(1192)
+import styles from "./styles.css";
+import { MyCanvas } from "./canvas.ts";
+import { Menu } from "./menu.ts";
+import ColorChooser from "./color_chooser.ts";
 
 export default class CanYouSeeMyPointer {
   #root?: HTMLElement;
@@ -10,16 +11,17 @@ export default class CanYouSeeMyPointer {
   #colorChooser?: ColorChooser;
 
   build() {
-    this.#root = document.createElement('div');
-    this.#root.className = 'can-you-see-my-pointer';
-    this.#root.addEventListener('x-content-event', this.#handleContentEvent);
+    this.#root = document.createElement("div");
+    this.#root.className = "can-you-see-my-pointer";
+    this.#root.addEventListener("x-content-event", this.#handleContentEvent);
 
     // Create a shadow root
-    const shadow = this.#root.attachShadow({ mode: 'open' });
-    console.debug('shadow', shadow);
+    const shadow = this.#root.attachShadow({ mode: "open" });
+    console.debug("shadow", shadow);
 
     // custom shadow style
-    const style = document.createElement('style');
+    const style = document.createElement("style");
+    console.debug("style", style);
     style.textContent = styles;
 
     // Create a canvas
@@ -31,7 +33,7 @@ export default class CanYouSeeMyPointer {
     const menu = this.#menu.build();
 
     // set color
-    const orange: NamedColor = { name: 'orange', r: 255, g: 148, b: 28 };
+    const orange: NamedColor = { name: "orange", r: 255, g: 148, b: 28 };
     this.#setColor(orange);
 
     // append children
@@ -48,7 +50,10 @@ export default class CanYouSeeMyPointer {
     this.#myCanvas?.destroy();
     this.#menu?.destroy();
     if (this.#root) {
-      this.#root.removeEventListener('x-content-event', this.#handleContentEvent);
+      this.#root.removeEventListener(
+        "x-content-event",
+        this.#handleContentEvent,
+      );
       document.body.removeChild(this.#root);
     }
 
@@ -60,13 +65,13 @@ export default class CanYouSeeMyPointer {
 
   // x-content-event handler
   #handleContentEvent = ((e: CustomEvent<XContentEvent>) => {
-    console.debug('handleContentEvent', e);
+    console.debug("handleContentEvent", e);
     switch (e.detail.type) {
-      case 'open_color_chooser':
+      case "open_color_chooser":
         this.#showColorChooser();
         break;
 
-      case 'set_color':
+      case "set_color":
         this.#setColor(e.detail.color);
         break;
 

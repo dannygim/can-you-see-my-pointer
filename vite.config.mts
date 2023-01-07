@@ -1,9 +1,10 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'npm:vite@^4.0.0';
+import { resolve } from "https://deno.land/std@0.171.0/path/mod.ts";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
+  console.info('build mode:', mode);
 
   return {
     base: '',
@@ -16,8 +17,8 @@ export default defineConfig(({ mode }) => {
       minify: isProduction,
       rollupOptions: {
         input: {
-          background: resolve(__dirname, 'src/background/main.ts'),
-          content: resolve(__dirname, 'src/content/main.ts'),
+          background: resolve('src/background/main.ts'),
+          content: resolve('src/content/main.ts'),
         },
         output: {
           entryFileNames: '[name].js'
