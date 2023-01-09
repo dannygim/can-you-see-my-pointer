@@ -10,6 +10,7 @@
     ],
     "types": [
       "./src/types.d.ts",
+      "./src/vite-env.d.ts",
       "https://unpkg.com/chrome-types@0.1.160/index.d.ts"
     ]
   },
