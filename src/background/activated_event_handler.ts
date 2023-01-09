@@ -1,11 +1,11 @@
 import { changeActiveExtension } from "./messages.ts";
+import { isExtensionEnabled } from "./utils.ts";
 
 async function handlerActivated(
   activeInfo: { tabId: number; windowId: number },
 ) {
   console.debug("activated", activeInfo);
-  const result = await chrome.storage.session.get([__KEY_IS_ENABLED__]);
-  const shouldEnable = result[__KEY_IS_ENABLED__] ?? false;
+  const shouldEnable = await isExtensionEnabled();
   await changeActiveExtension(shouldEnable);
 }
 

@@ -1,11 +1,12 @@
 import { changeActiveExtension } from "./messages.ts";
+import { isExtensionEnabled, setExtensionEnabled } from "./utils.ts";
 
 async function handleActionClick(tab: chrome.tabs.Tab) {
   console.debug("action clicked", tab);
-  const result = await chrome.storage.session.get([__KEY_IS_ENABLED__]);
-  const isEnabled = result[__KEY_IS_ENABLED__] ?? false;
+  const isEnabled = await isExtensionEnabled();
+  const shouldEnable = !isEnabled;
 
-  const iconPrefix = isEnabled ? "icon_off" : "icon";
+  const iconPrefix = shouldEnable ? "icon" : "icon_off";
   chrome.action.setIcon({
     path: {
       16: `assets/${iconPrefix}_16.png`,
@@ -14,10 +15,10 @@ async function handleActionClick(tab: chrome.tabs.Tab) {
       128: `assets/${iconPrefix}_128.png`,
     },
   });
-  await chrome.storage.session.set({ [__KEY_IS_ENABLED__]: !isEnabled });
+
+  await setExtensionEnabled(shouldEnable);
 
   // send on/off message to all tabs in current window
-  const shouldEnable = !isEnabled;
   await changeActiveExtension(shouldEnable);
 }
 
